@@ -7,6 +7,7 @@ module.exports = function(app,fs)
 			username : sess.username
 		})
 	});
+	
 	app.post('/login', function(req, res){ //login function
         	var sess; //session variable
         	sess = req.session; //initial session
@@ -63,18 +64,25 @@ module.exports = function(app,fs)
 		res.render('regist');
 	});
 	app.post('/regist_submit',function(req,res){
-		fs.readFile(__dirname + "/../data/data.json", "utf8", function(err, data){
-			users=JSON.parse(data);
-			
-			var username = req.body.username;
-			var password = req.body.password;
-			var justname = req.body.justname;
-			users[username] = {"password" : password,"name":justname};
-			users = JSON.stringify(users);
-			fs.writeFileSync(__dirname + "/../data/data.json",users, "utf8");
-			console.log(users);	
-		});
-		res.redirect('/');
+		var username = req.body.username;
+		var password = req.body.password;
+		var justname = req.body.justname;
+		if((username != '')&&(password != '')&&(justname != '')){
+			fs.readFile(__dirname + "/../data/data.json", "utf8", function(err, data){
+				users=JSON.parse(data);				
+				users[username] = {"password" : password,"name":justname};
+				users = JSON.stringify(users);
+				fs.writeFileSync(__dirname + "/../data/data.json",users, "utf8");
+				console.log(users);	
+			});
+			res.redirect('/');
+		}else{
+			res.render('regist');
+		}
+		
+	});
+	app.post('/reset',function(req,res){
+		res.redirect('/');	
 	});
 	
 }
