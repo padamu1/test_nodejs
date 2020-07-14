@@ -58,6 +58,23 @@ module.exports = function(app,fs)
         	}else{
         	        res.redirect('/');
         	}
-        })
+        });
+	app.post('/register',function(req,res){
+		res.render('regist');
+	});
+	app.post('/regist_submit',function(req,res){
+		fs.readFile(__dirname + "/../data/data.json", "utf8", function(err, data){
+			users=JSON.parse(data);
+			
+			var username = req.body.username;
+			var password = req.body.password;
+			var justname = req.body.justname;
+			users[username] = {"password" : password,"name":justname};
+			users = JSON.stringify(users);
+			fs.writeFileSync(__dirname + "/../data/data.json",users, "utf8");
+			console.log(users);	
+		});
+		res.redirect('/');
+	});
 	
 }
