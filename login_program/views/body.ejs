@@ -1,0 +1,16 @@
+
+<% if(username) { %>
+	<h2>Welcome! <%= username %></h2>
+	<form action="/logout" method = POST>
+	<button type = "submit">Logout</button>
+	</form>
+<% }els{ %>
+	<h2> Please Login </h2>
+	<form action=”/login/<%= username %>/<%= password%>” method=POST>
+	<label for="username">ID</label>
+	<input name = "username" type = "text" placeholder = "please input id">
+	<label for="password">PW</label>
+	<input name = "password" type = "text" placeholder = "please input pw">
+	<button type = "submit">Login</button>
+	</form>
+<% } %>
