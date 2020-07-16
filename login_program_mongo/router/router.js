@@ -52,39 +52,59 @@ module.exports = function(app,Userinfo)
         });
 
 	app.post('/register',function(req,res){
-		res.render('regist');
+		var sess = req.session;
+		res.render('regist',{
+			registcheck : sess.registcheck	
+		});
 	});
 	app.post('/regist_submit',function(req,res){
 		var sess; //session variable
         	sess = req.session;
+		sess.registcheck = 0;
 		if(sess.logincheck==0) sess.logincheck = 1;
 		var username = req.body.username;
 		var password = req.body.password;
 		var useremail = req.body.useremail;
 		if((username != '')&&(password != '')&&(useremail != '')){
-			var users = new Userinfo();
-			users.userid = username;
-			users.userpw = password;
-			users.useremail = useremail;
-			users.save(function(err){
-				if(err){
-					console.error(err);
-					res.json({result:0});
-					return;
-					}
-				else{
-					console.log("submit");
-					console.log(users);
-				}});			
-			res.redirect('/');
+			Userinfo.find({"userid":req.body.username},function(err,user){
+				if(user.length!=0){
+					console.log("user already exist");
+					
+					res.render('regist',{
+						registcheck : sess.registcheck	
+					});
+				}else{
+					var users = new Userinfo();
+					users.userid = username;
+					users.userpw = password;
+					users.useremail = useremail;
+					users.save(function(err){
+						if(err){
+							console.error(err);
+							res.json({result:0});
+							return;
+							}
+						else{
+							
+							console.log("submit");
+							console.log(users);
+						}
+					});
+					sess.registcheck =1;
+					res.redirect('/');		
+				}
+				
+			});
 		}else{
-			res.render('regist');
+			res.render('regist',{
+				registcheck : sess.registcheck	
+			});
 		}
-		
 	});
 	app.post('/reset',function(req,res){
 		var sess; //session variable
         	sess = req.session;
+		if(sess.registcheck==0) sess.registcheck=1;
 		if(sess.logincheck==0) sess.logincheck = 1;
 		res.redirect('/');	
 	});

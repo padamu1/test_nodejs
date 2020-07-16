@@ -3,6 +3,11 @@
 <h1> Regist </h1>
 </head>
 <body>
+	<% if(registcheck == 0) {%>
+		<script>
+			alert("regist fail"); // alert()는 경고창을 띄우는 함수입니다.
+		</script>
+	<% } %>
 	<form action=regist_submit method=POST>
 		<label for="username">ID</label>
 		<input name = "username" type = "text" placeholder = "please input id">
