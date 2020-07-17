@@ -1,0 +1,30 @@
+<html>
+<head>
+<h1> Regist </h1>
+</head>
+<body>
+	<% if(registcheck == 0) {%>
+		<script>
+			alert("regist fail"); // alert()는 경고창을 띄우는 함수입니다.
+		</script>
+	<% }else if(registcheck == 2){ %>
+		<script>
+			alert("[PW] and [PW check] doesn't match"); // alert()는 경고창을 띄우는 함수입니다.
+		</script>
+	<% }%>
+	<form action=regist_submit method=POST>
+		<label for="username">ID</label>
+		<input name = "username" type = "text" placeholder = "please input id"><br><br>
+		<label for="password">PW</label>
+		<input name = "password" type = "password" placeholder = "please input pw">
+		<label for="password_check">PW check</label>
+		<input name = "password_check" type = "password" placeholder = "please input pw"><br><br>
+		<label for="name">Email</label>
+		<input name = "useremail" type = "text" placeholder = "please input email"><br><br>
+		<button type = "submit">regist submit</button>
+	</form>
+	<form action=reset method=POST>
+		<button type = "submit">home</button>
+	</form>
+</body>
+</html>
