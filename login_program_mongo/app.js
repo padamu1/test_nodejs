@@ -33,7 +33,7 @@ db.once('open', function(){
     console.log("Connected to mongod server");
 });
 
-//mongoose.connect('mongodb://101.101.210.26/userinfo'); external ip connect
+//mongoose.connect('mongodb://ipaddress/userinfo'); external ip connect
 mongoose.connect('mongodb://localhost/userinfo');
 
 var Userinfo = require('./models/user');
