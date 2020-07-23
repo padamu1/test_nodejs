@@ -1,0 +1,10 @@
+
+var session = require('express-session');
+
+
+app.use(session({
+	secret: '@#@$MYSIGN#@$#$',
+	resave: false,
+	saveUninitialized: true
+})); // session setting
+
