@@ -14,9 +14,9 @@ router.get('/user',function(req,res){
     }
 });
 router.post("/login",function(req,res) {
-    if((req.body.username != '')&&(req.body.password != '')){
+    if((req.body.userid != '')&&(req.body.password != '')){
         sess = req.session;
-        Userinfo.findOne({"userid":req.body.username},function(err,user){
+        Userinfo.findOne({"userid":req.body.userid},function(err,user){
             if(err){
                 throw Error
             }
@@ -45,7 +45,7 @@ router.post("/login",function(req,res) {
 
 router.post('/logout',function(req,res){
     sess = req.session;
-    if(sess.username){
+    if(sess.userid){
         req.session.destroy(function(err){
             if(err){
                 throw Error
@@ -60,16 +60,16 @@ router.post('/logout',function(req,res){
 });
 
 router.post('/register',function(req,res){
-    if((req.body.username != '')&&(req.body.password != '')&&(req.body.useremail != '')){
+    if((req.body.userid != '')&&(req.body.password != '')&&(req.body.useremail != '')){
         if(req.body.password == req.body.password_check){
-            Userinfo.find({"userid":req.body.username},function(err,user){
+            Userinfo.find({"userid":req.body.userid},function(err,user){
                 if(err){
                     throw Error
                 }
                 if(user.length!=0){
                     return res.json({"success":"user already exist"})
                 }else{
-                    const user = new User(req.body);
+                    const user = new User({"userid":req.body.userid,"username":req.body.username,"password":req.body.password,"useremail":req.body.useremail});
                     user.save((err,doc) => {
                         if(err) throw Error
                         return res.status(200).json({"success":"submit"})
