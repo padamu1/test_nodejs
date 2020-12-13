@@ -23,7 +23,7 @@ app.use(session({
 })); // session setting
 
 // port config
-var port = process.env.PORT || 8080;
+var port = process.env.PORT || 8020;
 
 // CONNECT TO MONGODB SERVER
 var db = mongoose.connection;
@@ -34,7 +34,8 @@ db.once('open', function(){
 });
 
 //mongoose.connect('mongodb://ipadderss/userinfo'); external ip connect
-mongoose.connect('mongodb://localhost/userinfo');
+
+mongoose.connect('mongodb://18.217.3.32:8080/userinfo');
 
 var Userinfo = require('./models/user');
 

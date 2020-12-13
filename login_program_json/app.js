@@ -8,7 +8,8 @@ app.set('view engine', 'ejs'); //views working format
 app.engine('html', require('ejs').renderFile); //ejs -> HTML
 
 
-var server = app.listen(3000, function(){
+
+var server = app.listen(8020, function(){
 	console.log("Express server has started on port 3000")
 }); //server create
 
